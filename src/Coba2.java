@@ -81,7 +81,13 @@ class ArrayTask implements TaskStorage {
     
 }
 
+class LinkedListTask implements TaskStorage {
+    private LinkedList<String> tasksLL;
 
+    public LinkedListTask () {
+        this.tasksLL = new LinkedList<>();
+    }
+}
 
 public class Coba2 {
     public static void main(String[] args) {
