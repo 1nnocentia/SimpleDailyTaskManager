@@ -83,9 +83,30 @@ class ArrayTask implements TaskStorage {
 
 class LinkedListTask implements TaskStorage {
     private LinkedList<String> tasksLL;
+    private Stack<LinkedList<String>> hist;
 
     public LinkedListTask () {
         this.tasksLL = new LinkedList<>();
+        this.hist = new Stack<>();
+    }
+
+    private boolean isValidIndex (int index) {
+        if (index < 0 || index >= size) {
+            System.out.println("Out of range!");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void addTask (String task) {
+        tasksLL.add(task);
+    }
+
+    @Override
+    public void deleteTask (int index) {
+        if (!isValidIndex(index)) return;
+        System.out.println();
     }
 }
 
