@@ -1,11 +1,15 @@
 import java.util.Stack;
+
+import javax.sound.sampled.Line;
+
 import java.util.LinkedList;
 interface TaskStorage {
     void addTask(String task);
     void deleteTask(int index);
     void updateTask(int index, String newTask);
     void printTask();
-    int countTasks();    
+    int countTasks();
+    void undo();
 }
 
 class ArrayTask implements TaskStorage {
@@ -96,6 +100,10 @@ class LinkedListTask implements TaskStorage {
             return false;
         }
         return true;
+    }
+
+    private void saveState () {
+        hist.push(new LinkedList<>(tasksLL));
     }
 
     @Override
