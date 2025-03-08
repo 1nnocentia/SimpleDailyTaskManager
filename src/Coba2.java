@@ -1,5 +1,5 @@
 import java.util.Stack;
-
+import java.util.LinkedList;
 interface TaskStorage {
     void addTask(String task);
     void deleteTask(int index);
@@ -80,6 +80,8 @@ class ArrayTask implements TaskStorage {
     }
     
 }
+
+
 
 public class Coba2 {
     public static void main(String[] args) {
