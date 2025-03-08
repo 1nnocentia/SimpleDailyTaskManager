@@ -19,6 +19,14 @@ class ArrayTask implements TaskStorage {
         this.hist = new Stack<>();
     }
 
+    private boolean isValidIndex (int index) {
+        if (index < 0 || index >= size) {
+            System.out.println("Out of range!");
+            return false;
+        }
+        return true;
+    }
+
     private void saveState() {
         hist.push(tasksArray.clone());
     }
@@ -36,16 +44,14 @@ class ArrayTask implements TaskStorage {
 
     @Override
     public void deleteTask (int index) {
-        if (index >= 0 && index < size) {
-            System.out.println("Deleting \"" + tasksArray[index] + "\" from tasks list");
-            for (int i = index; i < size - 1; i++) {
-                tasksArray[i] = tasksArray[i + 1];
-            }
-            tasksArray[--size] = null;
-            System.out.println("Task deleted");
-        } else {
-            System.out.println("Index out of range");
+        if (!isValidIndex(index)) return;
+        saveState();
+        System.out.println("Deleting \"" + tasksArray[index] + "\" from the tasks list");
+
+        for (int i = index; i < size - 1; i++) {
+            tasksArray[i] = tasksArray[i+1];
         }
+        tasksArray[--size] = null;
     }
 
     public void updateTask (int index, String newTask) {
