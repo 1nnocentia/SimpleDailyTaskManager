@@ -5,6 +5,10 @@ public class SimpleDailyTask {
     static String[] tasksArray = new String[5];
     static {
         tasksArray[0] = "Task 1";
+        tasksArray[1] = "Task 2";
+        tasksArray[2] = "Task 3";
+        tasksArray[3] = "Task 4";
+        tasksArray[4] = "Task 5";
     }
     static String reset = "\u001B[0m";
     static String red = "\u001B[31m";
@@ -48,7 +52,6 @@ public class SimpleDailyTask {
             return;
         }
 
-        tasksArray[choiceDel] = null;
 
         for (int i = choiceDel; i < size - 1; i++) {
             tasksArray[i] = tasksArray[i + 1];
@@ -58,7 +61,18 @@ public class SimpleDailyTask {
     }
 
     public static void addTask (String[] tasksArray, int size) {
-        
+        System.out.print("Type your new task: ");
+        String newTask = scanner.nextLine();
+        tasksArray[size - 1] = newTask;
+    }
+
+    public static void updateTask (String[] tasksArray, int size) {
+        System.out.print("Which task do you want to update? ");
+        int choiceUp = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Type your new task: ");
+        String newTask = scanner.nextLine();
+        tasksArray[size-1] = newTask;
     }
     public static void main(String[] args) throws Exception {
         String userInput;
@@ -70,6 +84,10 @@ public class SimpleDailyTask {
             printTask(tasksArray);
             userInput = scanner.nextLine();
             deleteTask(tasksArray, choice1);
+            printTask(tasksArray);
+            addTask(tasksArray, choice1);
+            printTask(tasksArray);
+            updateTask(tasksArray, choice1);
             printTask(tasksArray);
 
             if (userInput.equalsIgnoreCase("q")){

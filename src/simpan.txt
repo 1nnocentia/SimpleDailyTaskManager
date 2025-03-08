@@ -1,0 +1,99 @@
+import java.util.Scanner;
+
+class TaskManager {
+    private String[] tasksArray;
+    private int size;
+
+    public TaskManager(int capacity) {
+        this.tasksArray = new String[capacity];
+        this.size = 0;
+    }
+
+    public void printTasks() {
+        System.out.println("          Tasks List: ");
+        System.out.println("          ***********");
+        for (int i = 0; i < tasksArray.length; i++) {
+            System.out.println("[" + (i + 1) + "] " + (tasksArray[i] != null ? tasksArray[i] : " "));
+        }
+        System.out.println("Total filled tasks: " + countTasks() + "/" + tasksArray.length);
+    }
+
+    public int countTasks() {
+        int count = 0;
+        for (String task : tasksArray) {
+            if (task != null) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public void addTask(String task) {
+        if (countTasks() >= tasksArray.length) {
+            System.out.println("Task list is full!");
+            return;
+        }
+        for (int i = 0; i < tasksArray.length; i++) {
+            if (tasksArray[i] == null) {
+                tasksArray[i] = task;
+                break;
+            }
+        }
+    }
+
+    public void deleteTask(int index) {
+        if (index < 0 || index >= tasksArray.length || tasksArray[index] == null) {
+            System.out.println("Invalid task number!");
+            return;
+        }
+
+        // Geser elemen ke kiri
+        for (int i = index; i < tasksArray.length - 1; i++) {
+            tasksArray[i] = tasksArray[i + 1];
+        }
+        tasksArray[tasksArray.length - 1] = null; // Kosongkan slot terakhir
+    }
+
+    public void updateTask(int index, String newTask) {
+        if (index < 0 || index >= tasksArray.length || tasksArray[index] == null) {
+            System.out.println("Invalid task number!");
+            return;
+        }
+        tasksArray[index] = newTask;
+    }
+}
+
+public class SimpleDailyTask {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        TaskManager taskManager = new TaskManager(5);
+
+        while (true) {
+            taskManager.printTasks();
+            System.out.println("\nOptions: [1] Add Task  [2] Delete Task  [3] Update Task  [q] Quit");
+            System.out.print("Choose an option: ");
+            String userInput = scanner.nextLine();
+
+            if (userInput.equalsIgnoreCase("q")) {
+                break;
+            } else if (userInput.equals("1")) {
+                System.out.print("Enter new task: ");
+                String newTask = scanner.nextLine();
+                taskManager.addTask(newTask);
+            } else if (userInput.equals("2")) {
+                System.out.print("Enter task number to delete: ");
+                int deleteIndex = scanner.nextInt() - 1;
+                scanner.nextLine(); // Consume newline
+                taskManager.deleteTask(deleteIndex);
+            } else if (userInput.equals("3")) {
+                System.out.print("Enter task number to update: ");
+                int updateIndex = scanner.nextInt() - 1;
+                scanner.nextLine(); // Consume newline
+                System.out.print("Enter new task: ");
+                String newTask = scanner.nextLine();
+                taskManager.updateTask(updateIndex, newTask);
+            }
+        }
+        scanner.close();
+    }
+}

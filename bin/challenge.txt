@@ -1,0 +1,5 @@
+1. Jadi saya menemukan tentang 'interface, extend, dan implements'. Interface merupakan class yang tidak memiliki tubuh dalam method-methodnya dan harus diimplementasikan dalam kelas turunannya, deklarasi variabel memiliki atribut final sehingga bersifat absolut. Outputnya final kecuali di override.
+Interface = teknik polymorhpisme.
+Menggunakan implement unttuk implementasi lebih dari satu interface pada kelas turunannya.
+Reference: https://randy-arba.medium.com/interface-java-a0a8d53e6cb7
+Karena untuk tugas ini, fungsi yang digunakan kurang lebih sama tetapi dengan dua metode (array dan linkedlist) maka menggunakan interface bisa memudahkan dan merampingkan kode.
