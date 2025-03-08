@@ -27,12 +27,12 @@ class ArrayTask implements TaskStorage {
         return true;
     }
 
-    private void saveState() {
+    private void saveState () {
         hist.push(tasksArray.clone());
     }
 
     @Override
-    public void addTask(String task) {
+    public void addTask (String task) {
         if (size < tasksArray.length) {
             saveState();
             tasksArray[size++] = task;
@@ -55,7 +55,28 @@ class ArrayTask implements TaskStorage {
     }
 
     public void updateTask (int index, String newTask) {
-        
+        if (!isValidIndex(index)) return;
+
+        saveState();
+        System.out.println("Updating task: from \"" + tasksArray[index] + "\" to " + newTask);
+        tasksArray[index] = newTask;
+    }
+
+    public void printTask () {
+        System.out.println("    Tasks To-Do: ");
+        System.out.println("    ************");
+        for (int i = 0; i < size; i++) {
+            System.out.println("[" + (i+1) + "]" + (tasksArray[i] != null ? tasksArray[i] : " "));
+
+        }
+    }
+
+    public int countTasks () {
+        int count = 0;
+        for (String task: tasksArray) {
+            if (task != null) count++;
+        }
+        return count;
     }
     
 }
