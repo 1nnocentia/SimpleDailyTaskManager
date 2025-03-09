@@ -327,6 +327,12 @@ public class Coba2 {
                     taskManager.deleteTask(deleteIndex);
                 }
                 case 3 -> {
+                    if (taskManager.countTasks() == 0) {
+                        System.out.println("No Tasks to update");
+                        Thread.sleep(900);
+                        cls();
+                        continue;
+                    }
                     System.out.print("Task number to update: ");
                     int updateIndex = scanner.nextInt() - 1;
                     scanner.nextLine();
@@ -335,6 +341,11 @@ public class Coba2 {
                     taskManager.updateTask(updateIndex, updateTask);
                 }
                 case 4 -> {
+                    if (taskManager.countTasks() == 0) {
+                        System.out.println("No Tasks to mark as completed");
+                        Thread.sleep(900);
+                        cls();
+                        continue;
                     System.out.println("Task number to mark as completed: ");
                     int completeIndex = scanner.nextInt() - 1;
                     if (taskManager instanceof ArrayTask) {
