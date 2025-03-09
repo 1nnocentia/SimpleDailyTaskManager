@@ -427,6 +427,8 @@ public class DailyTaskManager {
                 }
                 default -> System.out.println("Out of range!");
             }
+            Thread.sleep(900);
+            cls();
         }
     }
 }
