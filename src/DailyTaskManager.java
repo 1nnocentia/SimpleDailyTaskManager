@@ -1,7 +1,6 @@
 import java.util.Stack;
 import java.util.LinkedList;
 import java.util.Scanner;
-//import javax.sound.sampled.Line;
 
 interface TaskStorage { //Declare method
     void addTask(String task); //method for add Task to tasklist
@@ -331,11 +330,9 @@ public class DailyTaskManager {
         
         if (choice == 1) {
             taskManager = new LinkedListTask();
-            System.out.println("Using LinkedList");
             
         } else {
             taskManager = new ArrayTask();
-            System.out.println("Using Array");
         }
         cls();
         while (true) {
