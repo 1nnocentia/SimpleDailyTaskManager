@@ -17,7 +17,7 @@ class ArrayTask implements TaskStorage { //method implement with array
     private Stack<String[]> taskHist; //stack to store task for undo action
     private boolean[] completed; //array to mark task as completed
     private Stack<boolean[]> completedHist; //stack to store completed task for undo action
-    private Stack<Integer> sizeHist;
+    private Stack<Integer> sizeHist; //stack to store size of array for undo action
 
     private static final String[] defaultTask = {
         "Checking Homework", 
@@ -25,9 +25,9 @@ class ArrayTask implements TaskStorage { //method implement with array
         "Do Database Assignment", 
         "Do Calculus Assignment", 
         "Do Web Programming Assignment"
-    };
+    }; //predefined task array
 
-    public ArrayTask() {
+    public ArrayTask() { //function to initialize array
         tasksArray = new String[5];
         completed = new boolean[5];
         this.size = defaultTask.length;
@@ -35,12 +35,13 @@ class ArrayTask implements TaskStorage { //method implement with array
         this.completedHist = new Stack<>();
         this.sizeHist = new Stack<>();
 
-        System.arraycopy(defaultTask, 0, tasksArray, 0, defaultTask.length);
+        System.arraycopy(defaultTask, 0, tasksArray, 0, defaultTask.length); //copy predefined task to array
 
         for (int i = 0; i < size; i++) {
             completed[i] = false;
-        }
-        /*tring[] predefinedTasks = {
+        } //initialize completed array (false)
+
+        /*String[] predefinedTasks = {
             "Checking Homework", 
             "Do OOP Assignment", 
             "Do Database Assignment", 
@@ -64,7 +65,7 @@ class ArrayTask implements TaskStorage { //method implement with array
             }
         }
         return true;
-    }
+    } //checking if all tasks are completed (for exit conditional)
 
     private boolean isValidIndex (int index) {
         if (index < 0 || index >= size) {
@@ -72,13 +73,13 @@ class ArrayTask implements TaskStorage { //method implement with array
             return false;
         }
         return true;
-    }
+    } //checking if index is valid (for error handling) (from user input)
 
     private void saveState () {
         taskHist.push(tasksArray.clone());
         completedHist.push(completed.clone());
         sizeHist.push(size);
-    }
+    } //save current state of tasks (for undo functionality)
 
     /*private void saveState () {
      * taskHist.push(Arrays.copyOf(tasksArray, tasksArray.length));
@@ -86,22 +87,22 @@ class ArrayTask implements TaskStorage { //method implement with array
     } */
 
     public void completedTask (int index) {
-        if (!isValidIndex(index)) return;
+        if (!isValidIndex(index)) return; //checking index
         if (completed[index]) {
             System.out.println("Task already completed!");
             return;
-        }
+        }  //checking if task is already completed
         saveState();
-        completed[index] = true;
+        completed[index] = true; //change to true if task not completed yet
         System.out.println("Task \"" + tasksArray[index] + "\" completed");
     }
 
-    @Override
+    @Override //override method from interface
     public void addTask (String task) {
-        if (size < tasksArray.length) {
+        if (size < tasksArray.length) { //checking if array is not full
             saveState();
-            tasksArray[size] = task;
-            completed[size] = false;
+            tasksArray[size] = task; //add new task
+            completed[size] = false; //completed status is false
             size++;
             System.out.println("Adding \"" + task + "\" to the Array");
         } else {
@@ -111,20 +112,20 @@ class ArrayTask implements TaskStorage { //method implement with array
 
     @Override
     public void deleteTask (int index) {
-        if (!isValidIndex(index)) return;
+        if (!isValidIndex(index)) return; //checking index
         if (completed[index]) {
             System.out.println("Cannot delete completed tasks!");
             return;
-        }
+        } //could not delete completed task
         saveState();
         System.out.println("Deleting \"" + tasksArray[index] + "\" from the tasks list");
 
         for (int i = index; i < size - 1; i++) {
             tasksArray[i] = tasksArray[i+1];
             completed[i] = completed[i+1];
-        }
+        } //shift element to the left
         tasksArray[--size] = null;
-        completed[size] = false; //?
+        completed[size] = false; 
     }
 
     public void updateTask (int index, String newTask) {
