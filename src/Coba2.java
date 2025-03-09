@@ -27,6 +27,15 @@ class ArrayTask implements TaskStorage { //method implement with array
         this.completedHist = new Stack<>();
     }
 
+    public boolean isAllCompleted () {
+        for (int i = 0; i < size; i++) {
+            if (!completed[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private boolean isValidIndex (int index) {
         if (index < 0 || index >= size) {
             System.out.println("Out of range!");
@@ -161,6 +170,14 @@ class LinkedListTask implements TaskStorage {
         this.completedHist = new Stack<>();
     }
 
+    public boolean isAllCompleted () {
+        for (boolean status: completedLL) {
+            if (!status) {
+                return false;
+            }
+        }
+        return true;
+    }
     public void completedTask(int index) {
         if (!isValidIndex(index)) return;
         if (completedLL.get(index)) {
@@ -245,9 +262,109 @@ class LinkedListTask implements TaskStorage {
     }
 }
 public class Coba2 {
-    public static void main(String[] args) {
-        
+    private static boolean allTaskCompleted (TaskStorage taskStorage) {
+        if (taskStorage instanceof ArrayTask) {
+            return ((ArrayTask) taskStorage).isAllCompleted();
+        } else if (taskStorage instanceof LinkedListTask) {
+            return ((LinkedListTask) taskStorage).isAllCompleted();
+        }
+        return false;
     }
 
+    private static void cls() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
 
+    private static void exitProgram () {
+        try {
+            Thread.sleep(900);
+        } catch (InterruptedException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        cls();
+        System.out.println("Have a nice rest!!!");
+        System.exit(0);
+    }
+    public static void main(String[] args) throws InterruptedException {
+        Scanner scanner = new Scanner(System.in);
+        TaskStorage taskManager;
+        System.out.println("******************************");
+        System.out.println("Welcome to Daily To-Do List!!!");
+        System.out.println("******************************");
+        System.out.print("Do you have a lot of tasks for today? [1] Yes [2] No, just basic : ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        
+        if (choice == 1) {
+            taskManager = new ArrayTask(5);
+        } else {
+            taskManager = new LinkedListTask();
+        }
+        cls();
+        while (true) {
+            taskManager.printTask();
+            System.out.println("[1] Add Task [2] Delete Task [3] Update Task \n[4] Mark Complete Task [5] Undo [6] Exit");
+            System.out.print("What you want to do?: ");
+            int choices = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choices) {
+                case 1 -> {
+                    System.out.print("New Task: ");
+                    String task = scanner.nextLine();
+                    taskManager.addTask(task);
+                }
+                case 2 -> {
+                    if (taskManager.countTasks() == 0) {
+                        System.out.println("No Tasks to delete");
+                        Thread.sleep(900);
+                        cls();
+                        continue;
+                    }
+                    System.out.print("Task number to delete: ");
+                    int deleteIndex = scanner.nextInt() - 1;
+                    taskManager.deleteTask(deleteIndex);
+                }
+                case 3 -> {
+                    System.out.print("Task number to update: ");
+                    int updateIndex = scanner.nextInt() - 1;
+                    scanner.nextLine();
+                    System.out.print("New Task: ");
+                    String updateTask = scanner.nextLine();
+                    taskManager.updateTask(updateIndex, updateTask);
+                }
+                case 4 -> {
+                    System.out.println("Task number to mark as completed: ");
+                    int completeIndex = scanner.nextInt() - 1;
+                    if (taskManager instanceof ArrayTask) {
+                        ((ArrayTask) taskManager).completedTask(completeIndex);
+                    } else if (taskManager instanceof LinkedListTask) {
+                        ((LinkedListTask) taskManager).completedTask(completeIndex);
+                    }
+
+                }
+                case 5 -> {
+                    taskManager.undo();
+                }
+                case 6 -> {
+                    if (allTaskCompleted(taskManager)) {
+                        System.out.println("Thank you for using Daily To-Do List!");
+                        System.out.println("Exiting Program . . .");
+                        exitProgram();
+                    } else {
+                        System.out.print("Do you give up alreay? (yes/no): ");
+                        String giveUp = scanner.nextLine().trim();
+                        if (giveUp.equalsIgnoreCase("yes")) {
+                            System.out.println("Warning: All task will be lost!");
+                            exitProgram();
+                        } else {
+                            continue;
+                        };
+                    }
+                }
+                default -> System.out.println("Out of range!");
+            }
+        }
+    }
 }
