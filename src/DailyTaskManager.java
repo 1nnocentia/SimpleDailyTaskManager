@@ -143,7 +143,7 @@ class ArrayTask implements TaskStorage { //method implement with array
         System.out.println("    Tasks To-Do: ");
         System.out.println("    ************");
         for (int i = 0; i < size; i++) {
-            String status = completed[i] ? " -Done" : "";
+            String status = completed[i] ? " -Done" : ""; //check if completed = true, add -Done to the end of the task
             System.out.println("[" + (i+1) + "]" + (tasksArray[i] != null ? tasksArray[i] : " ") + status);
 
         }
@@ -154,7 +154,7 @@ class ArrayTask implements TaskStorage { //method implement with array
         int count = 0;
         for (String task: tasksArray) {
             if (task != null) count++;
-        }
+        } // count task that is not null
         return count;
     }
 
@@ -168,7 +168,7 @@ class ArrayTask implements TaskStorage { //method implement with array
 
     @Override
     public void undo () {
-        if (!taskHist.isEmpty() && !completedHist.isEmpty() && !sizeHist.isEmpty()) {
+        if (!taskHist.isEmpty() && !completedHist.isEmpty() && !sizeHist.isEmpty()) { //check if there are tasks to undo
             tasksArray = taskHist.pop();
             completed = completedHist.pop();
             size = sizeHist.pop();
@@ -190,13 +190,13 @@ class ArrayTask implements TaskStorage { //method implement with array
     
 }
 
-class LinkedListTask implements TaskStorage {
+class LinkedListTask implements TaskStorage { //method implement with linked list
     private LinkedList<String> tasksLL;
     private Stack<LinkedList<String>> taskHist;
     private LinkedList<Boolean> completedLL;
     private Stack<LinkedList<Boolean>> completedHist;
 
-    public LinkedListTask () {
+    public LinkedListTask () { //function to initialize linkedlisttask
         this.tasksLL = new LinkedList<>();
         this.taskHist = new Stack<>();
         this.completedLL = new LinkedList<>();
@@ -204,13 +204,14 @@ class LinkedListTask implements TaskStorage {
     }
 
     public boolean isAllCompleted () {
-        for (boolean status: completedLL) {
+        for (boolean status: completedLL) { //for-each
             if (!status) {
                 return false;
             }
-        }
+        } //return false if there any false in completedLL
         return true;
     }
+
     public void completedTask(int index) {
         if (!isValidIndex(index)) return;
         if (completedLL.get(index)) {
@@ -296,18 +297,18 @@ class LinkedListTask implements TaskStorage {
 }
 public class DailyTaskManager {
     private static boolean allTaskCompleted (TaskStorage taskStorage) {
-        if (taskStorage instanceof ArrayTask) {
+        if (taskStorage instanceof ArrayTask) { //alltaskcompleted for arraytask
             return ((ArrayTask) taskStorage).isAllCompleted();
         } else if (taskStorage instanceof LinkedListTask) {
             return ((LinkedListTask) taskStorage).isAllCompleted();
-        }
+        } //alltaskcompleted for linked list
         return false;
     }
 
     private static void cls() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-    }
+    } //clear screen
 
     private static void exitProgram () {
         try {
@@ -317,10 +318,10 @@ public class DailyTaskManager {
         }
         cls();
         System.out.println("Have a nice rest!!!");
-        System.exit(0);
+        System.exit(0); //terminate
     }
-    public static void main(String[] args) throws InterruptedException {
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) throws InterruptedException { //main program
+        Scanner scanner = new Scanner(System.in); //initialize scanner
         TaskStorage taskManager;
         System.out.println("******************************");
         System.out.println("Welcome to Daily To-Do List!!!");
@@ -336,7 +337,7 @@ public class DailyTaskManager {
             taskManager = new ArrayTask();
         }
         cls();
-        while (true) {
+        while (true) { //main loop
             System.out.println();
             taskManager.printTask();
             System.out.println("Task count: " + taskManager.countTasks());
@@ -346,10 +347,10 @@ public class DailyTaskManager {
             int choices = scanner.nextInt();
             scanner.nextLine();
 
-            boolean couldAddTask = !(taskManager instanceof ArrayTask) || ((ArrayTask) taskManager).countTasks() <5;
+            boolean couldAddTask = !(taskManager instanceof ArrayTask) || ((ArrayTask) taskManager).countTasks() <5; //check if array is not full (validation)
 
             switch (choices) {
-                case 1 -> {
+                case 1 -> { //add task
                     if (!couldAddTask) {
                         System.out.println("Task is full. Couldn't add more");
                         Thread.sleep(900);
@@ -360,7 +361,7 @@ public class DailyTaskManager {
                     String task = scanner.nextLine();
                     taskManager.addTask(task);
                 }
-                case 2 -> {
+                case 2 -> { //delete task
                     if (taskManager.countTasks() == 0) {
                         System.out.println("No Tasks to delete");
                         Thread.sleep(900);
