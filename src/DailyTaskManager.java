@@ -19,12 +19,41 @@ class ArrayTask implements TaskStorage { //method implement with array
     private boolean[] completed; //array to mark task as completed
     private Stack<boolean[]> completedHist; //stack to store completed task for undo action
 
-    public ArrayTask(int cap) {
-        tasksArray = new String[cap];
-        completed = new boolean[cap];
-        this.size = 0;
+    private static final String[] defaultTask = {
+        "Checking Homework", 
+        "Do OOP Assignment", 
+        "Do Database Assignment", 
+        "Do Calculus Assignment", 
+        "Do Web Programming Assignment"
+    };
+
+    public ArrayTask() {
+        tasksArray = new String[5];
+        completed = new boolean[5];
+        this.size = defaultTask.length;
         this.taskHist = new Stack<>();
         this.completedHist = new Stack<>();
+
+        System.arraycopy(defaultTask, 0, tasksArray, 0, defaultTask.length);
+
+        for (int i = 0; i < size; i++) {
+            completed[i] = false;
+        }
+        /*tring[] predefinedTasks = {
+            "Checking Homework", 
+            "Do OOP Assignment", 
+            "Do Database Assignment", 
+            "Do Calculus Assignment", 
+            "Do Web Programming Assignment"
+        };*/
+
+        /*for (String task: predefinedTasks) {
+            if (size < cap) {
+                tasksArray[size] = task;
+                completed[size] = false;
+                size++;
+            }
+        }*/
     }
 
     public boolean isAllCompleted () {
@@ -261,7 +290,7 @@ class LinkedListTask implements TaskStorage {
         }
     }
 }
-public class Coba2 {
+public class DailyTaskManager {
     private static boolean allTaskCompleted (TaskStorage taskStorage) {
         if (taskStorage instanceof ArrayTask) {
             return ((ArrayTask) taskStorage).isAllCompleted();
@@ -297,13 +326,18 @@ public class Coba2 {
         scanner.nextLine();
         
         if (choice == 1) {
-            taskManager = new ArrayTask(5);
-        } else {
             taskManager = new LinkedListTask();
+            System.out.println("Using LinkedList");
+            
+        } else {
+            taskManager = new ArrayTask();
+            System.out.println("Using Array");
         }
         cls();
         while (true) {
             taskManager.printTask();
+            System.out.println("Task count: " + taskManager.countTasks());
+            System.out.println();
             System.out.println("[1] Add Task [2] Delete Task [3] Update Task \n[4] Mark Complete Task [5] Undo [6] Exit");
             System.out.print("What you want to do?: ");
             int choices = scanner.nextInt();
