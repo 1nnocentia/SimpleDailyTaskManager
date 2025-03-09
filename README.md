@@ -15,7 +15,12 @@ Developing Java CLI application called Daily Task Manager to demonstrate data st
 
 
 ## Challenge Encountered and Solution
-
+1. I found out about 'interface, extend, and implements'. An interface is a class that does not have method bodies and must be implemented in its subclasses. Variable declarations in an interface have the final attribute, making them absolute. The output is final unless overridden.
+An interface is a technique for polymorphism.
+The implements keyword is used to implement more than one interface in a subclass.
+Reference: https://randy-arba.medium.com/interface-java-a0a8d53e6cb7
+Since this task involves similar functions but with two different methods (array and linked list), using an interface can simplify and streamline the code.
+2. 
 
 ## Program Workflow
 

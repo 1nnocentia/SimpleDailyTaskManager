@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class SimpleDailyTask {
+public class BukanIni {
     static Scanner scanner = new Scanner (System.in);
     static String[] tasksArray = new String[5];
     static {
