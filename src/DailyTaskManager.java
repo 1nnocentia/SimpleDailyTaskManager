@@ -18,6 +18,7 @@ class ArrayTask implements TaskStorage { //method implement with array
     private Stack<String[]> taskHist; //stack to store task for undo action
     private boolean[] completed; //array to mark task as completed
     private Stack<boolean[]> completedHist; //stack to store completed task for undo action
+    private Stack<Integer> sizeHist;
 
     private static final String[] defaultTask = {
         "Checking Homework", 
@@ -33,6 +34,7 @@ class ArrayTask implements TaskStorage { //method implement with array
         this.size = defaultTask.length;
         this.taskHist = new Stack<>();
         this.completedHist = new Stack<>();
+        this.sizeHist = new Stack<>();
 
         System.arraycopy(defaultTask, 0, tasksArray, 0, defaultTask.length);
 
@@ -76,6 +78,7 @@ class ArrayTask implements TaskStorage { //method implement with array
     private void saveState () {
         taskHist.push(tasksArray.clone());
         completedHist.push(completed.clone());
+        sizeHist.push(size);
     }
 
     /*private void saveState () {
@@ -165,9 +168,10 @@ class ArrayTask implements TaskStorage { //method implement with array
 
     @Override
     public void undo () {
-        if (!taskHist.isEmpty() && !completedHist.isEmpty()) {
+        if (!taskHist.isEmpty() && !completedHist.isEmpty() && !sizeHist.isEmpty()) {
             tasksArray = taskHist.pop();
             completed = completedHist.pop();
+            size = sizeHist.pop();
             System.out.println("Undo last action.");
         } else {
             System.out.println("Do something first!");
