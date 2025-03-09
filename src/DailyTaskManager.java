@@ -244,7 +244,7 @@ class LinkedListTask implements TaskStorage {
 
     @Override
     public void deleteTask (int index) {
-        if (isValidIndex(index)) return;
+        if (!isValidIndex(index)) return;
         if (completedLL.get(index)) {
             System.out.println("Cannot delete completed tasks!");
             return;
@@ -273,7 +273,7 @@ class LinkedListTask implements TaskStorage {
         System.out.println("    ************");
         for (int i = 0; i < tasksLL.size() ; i++) {
             String status = completedLL.get(i) ? " -Done" : "";
-            System.out.println("[" + (i+1) + "]" + (tasksLL.get(i) != null ? tasksLL.get(i) : " "));
+            System.out.println("[" + (i+1) + "] " + (tasksLL.get(i) != null ? tasksLL.get(i) : " " ) + status);
         }
     }
 
