@@ -140,7 +140,7 @@ class ArrayTask implements TaskStorage { //method implement with array
         System.out.println("    Tasks To-Do: ");
         System.out.println("    ************");
         for (int i = 0; i < size; i++) {
-            String status = completed[i] ? " ✔" : "";
+            String status = completed[i] ? " -Done" : "";
             System.out.println("[" + (i+1) + "]" + (tasksArray[i] != null ? tasksArray[i] : " ") + status);
 
         }
@@ -269,7 +269,7 @@ class LinkedListTask implements TaskStorage {
         System.out.println("    Tasks To-Do: ");
         System.out.println("    ************");
         for (int i = 0; i < tasksLL.size() ; i++) {
-            String status = completedLL.get(i) ? " ✔" : "";
+            String status = completedLL.get(i) ? " -Done" : "";
             System.out.println("[" + (i+1) + "]" + (tasksLL.get(i) != null ? tasksLL.get(i) : " "));
         }
     }
@@ -335,6 +335,7 @@ public class DailyTaskManager {
         }
         cls();
         while (true) {
+            System.out.println();
             taskManager.printTask();
             System.out.println("Task count: " + taskManager.countTasks());
             System.out.println();
@@ -343,8 +344,16 @@ public class DailyTaskManager {
             int choices = scanner.nextInt();
             scanner.nextLine();
 
+            boolean couldAddTask = !(taskManager instanceof ArrayTask) || ((ArrayTask) taskManager).countTasks() <5;
+
             switch (choices) {
                 case 1 -> {
+                    if (!couldAddTask) {
+                        System.out.println("Task is full. Couldn't add more");
+                        Thread.sleep(900);
+                        cls();
+                        continue;
+                    }
                     System.out.print("New Task: ");
                     String task = scanner.nextLine();
                     taskManager.addTask(task);
@@ -381,7 +390,7 @@ public class DailyTaskManager {
                         cls();
                         continue;
                     }
-                    System.out.println("Task number to mark as completed: ");
+                    System.out.print("Task number to mark as completed: ");
                     int completeIndex = scanner.nextInt() - 1;
                     if (taskManager instanceof ArrayTask) {
                         ((ArrayTask) taskManager).completedTask(completeIndex);
