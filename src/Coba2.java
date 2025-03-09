@@ -346,6 +346,7 @@ public class Coba2 {
                         Thread.sleep(900);
                         cls();
                         continue;
+                    }
                     System.out.println("Task number to mark as completed: ");
                     int completeIndex = scanner.nextInt() - 1;
                     if (taskManager instanceof ArrayTask) {
@@ -356,6 +357,12 @@ public class Coba2 {
 
                 }
                 case 5 -> {
+                    if (taskManager.countTasks() == 0) {
+                        System.out.println("No Tasks to undo");
+                        Thread.sleep(900);
+                        cls();
+                        continue;
+                    }
                     taskManager.undo();
                 }
                 case 6 -> {
