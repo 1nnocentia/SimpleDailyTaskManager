@@ -20,7 +20,11 @@ An interface is a technique for polymorphism.
 The implements keyword is used to implement more than one interface in a subclass.
 Reference: https://randy-arba.medium.com/interface-java-a0a8d53e6cb7
 Since this task involves similar functions but with two different methods (array and linked list), using an interface can simplify and streamline the code.
-2. 
+2. After completing the main program, I gradually added input validation to enhance the code. Here, I started testing the program to see if it runs correctly. If not, I will fix it menu by menu. This approach is easier than my previous method because using an interface makes the code more organized. I tested whether the data structure was correct, then checked if add, delete, update, mark completed, undo, and exit worked properly. During testing, I found many issues. For example:
+- The predefined tasks did not appear because I mistakenly input the wrong data structure.
+- After deleting a task and then performing undo, the task count increased, but the deleted tasks did not reappear.
+- And many other issues.
+I may not be able to fix every validation issue, but I am quite satisfied with what I have accomplished—especially because I discovered the interface method. Of course, my understanding wouldn't have been possible without ChatGPT, which allowed me to ask questions and helped me grasp the concept.
 
 ## Program Workflow
 
