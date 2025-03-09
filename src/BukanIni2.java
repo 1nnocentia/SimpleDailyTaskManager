@@ -1,5 +1,5 @@
 
-public class InputValidation {
+public class BukanIni2 {
     static Scanner scanner = new Scanner(System.in);
     
     public static int getValidOption (int min, int max) {
